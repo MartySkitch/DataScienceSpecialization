@@ -1,4 +1,4 @@
-## Rank hospitals by outcome in all state
+run_analysis## Rank hospitals by outcome in all state
 
 rankall <- function(outcome, num = "best") {
   ## Read the outcome date
