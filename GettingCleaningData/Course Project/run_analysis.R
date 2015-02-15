@@ -37,7 +37,7 @@ trainingSubjects <- read.csv(trainingSubjectFile, header=FALSE)
 trainingDataFile <- "./UCI HAR Dataset/train/X_train.txt"
 dt.Training.X <- read_data_file(trainingDataFile)
 
-# Rename the columns
+# Rename all the columns to the feature names
 names(dt.Training.X) <- featureColumns[,2]
 
 ## Keep on the columns of interest
@@ -49,8 +49,10 @@ dt.Training.X <- cbind(trainingSubjects, trainingLabels, dt.Training.X)
 # Rename the columns
 colnames(dt.Training.X)[1:2]<- new.Column.Names
 
+# Merge the activity IDs to the labels
 dt.Training.X <- merge(dt.Training.X, activityLables, by.x ='Activity', by.y ='V1')
 
+# Rearrange the columns
 dt.Training.X <- select(dt.Training.X, c(2,80,3:79)) %>% arrange(SubjectID, V2)
 # Rename the columns
 colnames(dt.Training.X)[1:2]<- new.Column.Names
@@ -67,7 +69,7 @@ testSubjects <- read.csv(testSubjectFile, header=FALSE)
 testDataFile <- "./UCI HAR Dataset/test/X_test.txt"
 dt.Test.X <- read_data_file(testDataFile)
 
-# Rename the columns
+# Rename all the columns to the feature names
 names(dt.Test.X) <- featureColumns[,2]
 
 ## Keep on the columns of interest
@@ -79,12 +81,16 @@ dt.Test.X <- cbind(testSubjects, testLabels, dt.Test.X)
 # Rename the columns
 colnames(dt.Test.X)[1:2]<- new.Column.Names
 
+# Merge the activity IDs to the labels
 dt.Test.X <- merge(dt.Test.X, activityLables, by.x ='Activity', by.y ='V1')
 
+# Rearrange the columns
 dt.Test.X <- select(dt.Test.X, c(2,80,3:79)) %>% arrange(SubjectID, V2)
+
 # Rename the columns
 colnames(dt.Test.X)[1:2]<- new.Column.Names
 
+# Combine the test and training data
 dt.X <- rbind(dt.Training.X, dt.Test.X)
 
 out <- write.table(dt.X, "./tidyData.txt",  sep = " ", col.names = TRUE, row.names = FALSE)
