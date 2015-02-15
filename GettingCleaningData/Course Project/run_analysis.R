@@ -2,9 +2,6 @@
 
 run_analysis <- function() {
 
-## Set the directory
-##setwd("D:/Skitch/Code/R/DataScienceSpecialization/DataScienceSpecialization/GettingCleaningData/Course Project")
-
 library(dplyr)
 library(data.table)
 
