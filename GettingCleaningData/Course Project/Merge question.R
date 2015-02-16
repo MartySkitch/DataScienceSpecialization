@@ -1,0 +1,7 @@
+subjects <- c(1:10)
+activity <- c(rep(1,3), rep(2,3), rep(3,4))
+see(69)
+data <- rnorm(10)
+indx <- c(1,2,3)
+label <- c("Sit", "Jump", "Walk")
+activityLabel <- data.frame(indx, label)
