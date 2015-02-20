@@ -69,4 +69,4 @@ Read Me for the Getting and Cleaning Course Project
   **Summary of the Tidy data**
 
       data.mean <- read.table("./tidyDataMean.txt", header = TRUE) 
-      View(data.mean)'''
+      View(data.mean)
