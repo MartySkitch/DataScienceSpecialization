@@ -1,7 +1,7 @@
 
 # setwd("D:/Skitch/Code/R/DataScienceSpecialization/DataScienceSpecialization/Exploratory Data Analysis/Project 2")
 
-question1 <- function () {
+plot2 <- function () {
   
   library(dplyr)
   
@@ -22,27 +22,28 @@ question1 <- function () {
   NEI <- readRDS(paste("./Data", fname[2], sep = "/"))
   SCC <- readRDS(paste("./Data", fname[1], sep = "/"))
   
-  # pollution <- select(NEI, year, Emissions)
-  # pollutionByYear <- group_by(pollution, year)  %>% 
-  #                       summarise(tot_Emmision = sum(Emissions))
-  Total_PM25_By_Year <- select(NEI, year, Emissions) %>%
+  
+  
+  Total_PM25_By_Year <- filter(NEI, fips == "24510") %>%
+                      select(year, Emissions) %>%                  
                       group_by(year)  %>% 
                       summarise(tot_Emmision = sum(Emissions))
   # Plot for the scrren
   plot_emmision(Total_PM25_By_Year)
   
   # Plot for file
-  png(filename = "./Question 1.png")
+  png(filename = "./plot2.png")
   plot_emmision(Total_PM25_By_Year)
   dev.off()
 }  
-  
+
+# Function to plot data (this should be private)    
 plot_emmision <- function (Total_PM25_By_Year) {
   par(mfrow = c(1,1))
   with(Total_PM25_By_Year, plot(year, tot_Emmision, pch = 2,
                             xlab = "Year",
-                            ylab = "Total Emmision",
-                            main = "Total PM2.5 by Year"))
+                            ylab = "Total Emmision (tons)",
+                            main = "Total PM2.5 - Baltimore City"))
   model <- lm(tot_Emmision ~ year, Total_PM25_By_Year)
   abline(model, lwd = 2)
 }
