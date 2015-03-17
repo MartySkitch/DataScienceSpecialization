@@ -1,9 +1,10 @@
 
 # setwd("D:/Skitch/Code/R/DataScienceSpecialization/DataScienceSpecialization/Exploratory Data Analysis/Project 2")
 
-plot2 <- function () {
+plot3 <- function () {
   
   library(dplyr)
+  library(ggplot2)
   
   dir.create("./Data", showWarnings = FALSE)
   
@@ -25,26 +26,24 @@ plot2 <- function () {
   
   
   Total_PM25_By_Year <- filter(NEI, fips == "24510") %>%
-                      select(year, Emissions) %>%                  
-                      group_by(year)  %>% 
+                      select(year, type, Emissions) %>%  
+                      mutate(type = as.factor(type)) %>%
+                      group_by(year, type)  %>% 
                       summarise(tot_Emision = sum(Emissions))
   # Plot for the scrren
-  plot_emision(Total_PM25_By_Year)
+#   qp <- qplot(year, tot_Emision, data = Total_PM25_By_Year, facets = .~type,
+#               geom = c("point", "smooth"), method = "lm", formula = y~x, se = FALSE)
+#   qp
+#   
+  g <- ggplot(Total_PM25_By_Year, aes(year, tot_Emision) ) + geom_point() +
+              geom_smooth(method = "lm", se = FALSE) + facet_grid(. ~ type) +
+              labs(title = "Total PM2.5 - Baltimore City") +
+              labs(x = "Year", y = "Total Emision (tons)")
+  print(g)
   
   # Plot for file
-  png(filename = "./plot2.png")
-  plot_emision(Total_PM25_By_Year)
+  png(filename = "./plot3.png", width = 720, height = 480)
+  print(g)
   dev.off()
 }  
-
-# Function to plot data (this should be private)    
-plot_emision <- function (Total_PM25_By_Year) {
-  par(mfrow = c(1,1))
-  with(Total_PM25_By_Year, plot(year, tot_Emision, pch = 2,
-                            xlab = "Year",
-                            ylab = "Total Emision (tons)",
-                            main = "Total PM2.5 - Baltimore City"))
-  model <- lm(tot_Emision ~ year, Total_PM25_By_Year)
-  abline(model, lwd = 2)
-}
 

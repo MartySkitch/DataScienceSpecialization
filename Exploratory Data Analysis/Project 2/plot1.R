@@ -25,24 +25,24 @@ plot1 <- function () {
   Total_PM25_By_Year <- select(NEI, year, Emissions) %>%
                       group_by(year)  %>% 
                       mutate(total_pollution = Emissions / 10^6) %>%
-                      summarise(tot_Emmision = sum(total_pollution))
+                      summarise(tot_Emision = sum(total_pollution))
   # Plot for the scrren
-  plot_emmision(Total_PM25_By_Year)
+  plot_emision(Total_PM25_By_Year)
   
   # Plot for file
   png(filename = "./plot1.png")
-  plot_emmision(Total_PM25_By_Year)
+  plot_emision(Total_PM25_By_Year)
   dev.off()
 }  
 
 # Function to plot data (this should be private)  
-plot_emmision <- function (Total_PM25_By_Year) {
+plot_emision <- function (Total_PM25_By_Year) {
   par(mfrow = c(1,1))
-  with(Total_PM25_By_Year, plot(year, tot_Emmision, pch = 2,
+  with(Total_PM25_By_Year, plot(year, tot_Emision, pch = 2,
                             xlab = "Year",
-                            ylab = "Total Emmision (Millions of Tons)",
+                            ylab = "Total Emision (Millions of Tons)",
                             main = "Total PM2.5"))
-  model <- lm(tot_Emmision ~ year, Total_PM25_By_Year)
+  model <- lm(tot_Emision ~ year, Total_PM25_By_Year)
   abline(model, lwd = 2)
 }
 
