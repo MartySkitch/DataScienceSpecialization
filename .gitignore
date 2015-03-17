@@ -3,4 +3,4 @@
 *.txt
 *.csv
 *.xlsx
-.Rhistory
+**/.Rhistory/**

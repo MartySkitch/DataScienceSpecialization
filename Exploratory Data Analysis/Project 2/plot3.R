@@ -38,11 +38,12 @@ plot3 <- function () {
   g <- ggplot(Total_PM25_By_Year, aes(year, tot_Emision) ) + geom_point() +
               geom_smooth(method = "lm", se = FALSE) + facet_grid(. ~ type) +
               labs(title = "Total PM2.5 - Baltimore City") +
-              labs(x = "Year", y = "Total Emision (tons)")
+              labs(x = "Year", y = "Total Emision (tons)") +
+              theme(axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   
   # Plot for file
-  png(filename = "./plot3.png", width = 720, height = 480)
+  png(filename = "./plot3.png", width = 480, height = 480)
   print(g)
   dev.off()
 }  
